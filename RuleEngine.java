@@ -6,12 +6,12 @@ public class RuleEngine {
 
     private Rule rules;
 
-    public void loadRules(Integer creditScore) {
+    public void loadRules(Integer creditScore, Integer baseCreditScore) {
         Map<String, Pair<Condition, Condition>> conditionMap = new HashMap<>();
 
         conditionMap.put("state", new Pair(new Condition("state", Optional.of(Operator.EQUAL), Optional.empty(), "Florida"), new Condition("offering", Optional.empty(), Optional.of(Action.DISQUALIFY), "")));
 
-        if (creditScore >= 720) {
+        if (creditScore >= baseCreditScore) {
             conditionMap.put("creditScore", new Pair(new Condition("creditScore", Optional.of(Operator.GREATER), Optional.empty(), "720"), new Condition("interestRate", Optional.empty(), Optional.of(Action.DECREASE_BY_X), "0.3")));
         } else {
             conditionMap.put("creditScore", new Pair(new Condition("creditScore", Optional.of(Operator.LESSER), Optional.empty(), "720"), new Condition("interestRate", Optional.empty(), Optional.of(Action.INCREASE_BY_X), "0.5")));
