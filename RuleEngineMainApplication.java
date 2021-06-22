@@ -12,9 +12,9 @@ public class RuleEngineMainApplication {
         RuleEngine engine = new RuleEngine();
         engine.loadRules(creditScore, baseCreditScore);
 
-//        Adding custom rule. In this instance. If State == Atlanta, product is disqualified
+//        Adding custom rule. In this instance. If State == Georgia, product is disqualified
 //        Map<String, Pair<Condition, Condition>> newRule = new HashMap<>();
-//        newRule.put("state", new Pair(new Condition("state", Optional.of(Operator.EQUAL), Optional.empty(), "Atlanta"), new Condition("offering", Optional.empty(), Optional.of(Action.DISQUALIFY), "")));
+//        newRule.put("state", new Pair(new Condition("state", Optional.of(Operator.EQUAL), Optional.empty(), "Georgia"), new Condition("offering", Optional.empty(), Optional.of(Action.DISQUALIFY), "")));
 //        Rule customRules = new Rule(newRule);
 //
 //        Product resultProduct = engine.runRules(person, product, Optional.of( customRules ));
