@@ -9,10 +9,13 @@ public class RuleEngine {
     public void loadRules(Integer creditScore, Integer baseCreditScore) {
         Map<String, Pair<Condition, Condition>> conditionMap = new HashMap<>();
 
-        conditionMap.put("state", new Pair(new Condition("state", Optional.empty(), Optional.empty(), "Florida"), new Condition("offering", Optional.empty(), Optional.of(Action.DISQUALIFY), "")));
+        conditionMap.put("state", new Pair(new Condition("state", Optional.of(Operator.EQUAL), Optional.empty(), "Florida"), new Condition("offering", Optional.empty(), Optional.of(Action.DISQUALIFY), "")));
 
-        conditionMap.put("creditScore", new Pair(new Condition("creditScore", Optional.of(Operator.GREATER), Optional.empty(), baseCreditScore.toString()), new Condition("interestRate", Optional.empty(), Optional.of(Action.DECREASE_BY_X), "0.3")));
-
+        if (creditScore >= baseCreditScore) {
+            conditionMap.put("creditScore", new Pair(new Condition("creditScore", Optional.of(Operator.GREATER), Optional.empty(), baseCreditScore.toString()), new Condition("interestRate", Optional.empty(), Optional.of(Action.DECREASE_BY_X), "0.3")));
+        } else {
+            conditionMap.put("creditScore", new Pair(new Condition("creditScore", Optional.of(Operator.LESSER), Optional.empty(), baseCreditScore.toString()), new Condition("interestRate", Optional.empty(), Optional.of(Action.INCREASE_BY_X), "0.5")));
+        }
         conditionMap.put("name", new Pair(new Condition("name", Optional.of(Operator.EQUAL), Optional.empty(), "7-1 ARM"), new Condition("interestRate", Optional.empty(), Optional.of(Action.INCREASE_BY_X), "0.5")));
 
         rules = new Rule(conditionMap);
